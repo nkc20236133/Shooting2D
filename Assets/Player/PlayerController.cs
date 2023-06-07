@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     Vector3 dir = Vector3.zero; //移動方向を保存する変数
 
+    Animator anim;
+
     void Start()
     {
-        
+        //アニメーターコンポネントの情報を保存
+        anim=GetComponent<Animator>();
     }
 
     void Update()
@@ -19,8 +22,22 @@ public class PlayerController : MonoBehaviour
         //移動方向をセット
         dir.x = Input.GetAxisRaw("Horizontal");
         dir.y = Input.GetAxisRaw("Vertical");
-
         transform.position += dir.normalized* speed * Time.deltaTime;
+
+        //アニメーション設定
+        if(dir.y==0)
+        {
+            //アニメーションクリップ[Player]を再生
+            anim.Play("Player");
+        }
+        else if(dir.y==1)
+        {
+            anim.Play("PlayerL");
+        }
+        else if(dir.y==-1)
+        {
+            anim.Play("PlayerR");
+        }
 
         //画面内移動制限
         Vector3 pos = transform.position;
