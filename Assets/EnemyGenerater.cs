@@ -8,22 +8,20 @@ public class EnemyGenerator : MonoBehaviour
     float span = 1f;
     float delta = 0;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
-        this.delta += Time.deltaTime;
-        if (this.delta > this.span)
-        {
-            // 敵を生成する
-            this.delta = 0;
-            GameObject go =Instantiate(enemyPre);
-            int px = Random.Range(4, -5);
-            go.transform.position = new Vector3(10, px, 1);
-        }
+        delta += Time.deltaTime; // 経過時間を計算
 
+        // span秒毎に処理を行う
+        if (delta > span)
+        {
+            delta = 0;  // 時間計算用変数を０にする
+            span -= (span >= 0.5f) ? 0.01f : 0f;  // スパンを少しずつ短くする
+
+            // 敵のプレハブをヒエラルキーに登場させる
+            GameObject go = Instantiate(enemyPre);
+            int py = Random.Range(-5, 6);
+            go.transform.position = new Vector3(10, py, 0);
+        }
     }
 }
